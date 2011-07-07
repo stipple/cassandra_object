@@ -41,10 +41,6 @@ class OneToManyAssociationsTest < CassandraObjectTestCase
       end
     
       should "tidy up when fetching" do
-        puts '*'*99
-        puts @customer.invoices.all
-        puts @customer.invoices.all.inspect
-        puts association_keys_in_cassandra.inspect
         assert_equal [@invoice], @customer.invoices.all
         assert_equal [@invoice.key.to_s], association_keys_in_cassandra
       end
@@ -94,10 +90,12 @@ class OneToManyAssociationsTest < CassandraObjectTestCase
                                   :last_name     => "Koziarski",
                                   :date_of_birth => Date.parse("1980/08/15")
 
-      assert @customer.valid?, @customer.errors
+      assert @customer.valid?
+      assert @customer.errors.empty?
 
       @invoice  = mock_invoice
-      assert @invoice.valid?, @invoice.errors
+      assert @invoice.valid?
+      assert @invoice.errors.empty?
 
       @customer.paid_invoices << @invoice
     end
