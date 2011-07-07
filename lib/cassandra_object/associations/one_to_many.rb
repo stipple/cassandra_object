@@ -83,7 +83,7 @@ module CassandraObject
     def <<(record)
       @association.add(@owner, record)
       if loaded?
-        @target << record
+        target << record
       end
     end
     

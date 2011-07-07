@@ -1,14 +1,10 @@
-ENV['CASSANDRA'] ||= "/usr/local/cassandra/bin/cassandra"
-
 if ENV['CASSANDRA_REQUIRED']
-  tmp = File.expand_path(File.join(File.dirname(__FILE__), '..', 'tmp'))
   config = File.expand_path(File.join(File.dirname(__FILE__), 'config'))
+  cassandra_bin = File.join(File.dirname(__FILE__),'..','vendor', 'cassandra-0.7','bin','cassandra')
 
   $pid = fork {
-    Dir.chdir(tmp)
-    puts "CASSANDRA_INCLUDE=#{config}/cassandra.in.sh #{ENV['CASSANDRA']} -f"
+    exec "#{cassandra_bin} -f"
   }
-
   # Wait for cassandra to boot
   sleep 3
 end

@@ -1,10 +1,11 @@
 require 'rubygems'
 require 'bundler'
+ENV['CASSANDRA_REQUIRED'] = 'true'
 
 Bundler.setup
 
 require 'cassandra_object'
-require 'connection'
+CassandraObject::Base.establish_connection "CassandraObject"
 
 require 'test/unit'
 require 'active_support/test_case'

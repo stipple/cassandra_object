@@ -23,8 +23,7 @@ module CassandraObject
       while objects.size < number_to_find && !out_of_keys
         index_results = connection.get(@column_family, @key, @super_column, :count=>limit,
                                                                             :start=>start_with,
-                                                                            :reversed=>@options[:reversed])
-
+                                                                            :reversed=>@options[:reversed])                                                              
         out_of_keys  = index_results.size < limit
 
         if !start_with.blank?
@@ -37,15 +36,16 @@ module CassandraObject
         missing_keys = []
         
         results = values.empty? ? {} : @target_class.multi_get(values)
+
         results.each do |(key, result)|
           if result.nil?
             missing_keys << key
           end
         end
-    
+   
         unless missing_keys.empty?
           @target_class.multi_get(missing_keys, :quorum=>true).each do |(key, result)|
-            index_key = index_results.index(key)
+            index_key = index_results[key]
             if result.nil?
               remove(index_key)
               results.delete(key)
@@ -59,14 +59,15 @@ module CassandraObject
           if @validators.all? {|v| v.call(o) }
             objects << o
           else
-            remove(index_results.index(o.key))
+            remove(index_results[o.key])
           end
         end
-        
+
         start_with = objects.last_column_name = keys.last
         limit = (number_to_find - results.size) + 1
         
       end
+
       
       return objects
     end

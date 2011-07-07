@@ -7,7 +7,7 @@ module CassandraObject
     end
 
     VALID_READ_CONSISTENCY_LEVELS = [:one, :quorum, :all]
-    VALID_WRITE_CONSISTENCY_LEVELS = VALID_READ_CONSISTENCY_LEVELS + [:zero]
+    VALID_WRITE_CONSISTENCY_LEVELS = VALID_READ_CONSISTENCY_LEVELS
 
     module ClassMethods
       def consistency_levels(levels)
@@ -61,8 +61,7 @@ module CassandraObject
       end
 
       def all(keyrange = ''..'', options = {})
-        results = connection.get_range(column_family, :start => keyrange.first, :finish => keyrange.last, :count=>(options[:limit] || 100))
-        keys = results.map(&:key)
+        keys = connection.get_range(column_family, :start => keyrange.first, :finish => keyrange.last, :count=>(options[:limit] || 100))
         keys.map {|key| get(key) }
       end
 
@@ -130,7 +129,6 @@ module CassandraObject
 
       def consistency_for_thrift(consistency)
         {
-          :zero   => Cassandra::Consistency::ZERO,
           :one    => Cassandra::Consistency::ONE, 
           :quorum => Cassandra::Consistency::QUORUM,
           :all    => Cassandra::Consistency::ALL
