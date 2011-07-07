@@ -5,4 +5,5 @@ bin/*
 vendor/gems/*
 !vendor/gems/cache/
 vendor/cassandra-0.7/data/*
+vendor/cassandra-0.7/log/*
 .bundle
