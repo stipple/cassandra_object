@@ -77,3 +77,10 @@ Only if you're looking to help out with the development, there are a bunch of ro
 ## Why do you use a superclass and not a module.
 
 Because.
+
+##Development Notes
+In order to facilitate testing, we have included a vendorised version of cassandra. This must be running with a valid test schema before running the tests
+
+  cd vendor/cassandra-0.7/
+  bin/cassandra
+  bin/cassandra-cli -host localhost --file conf/schema-sample.txt
