@@ -20,9 +20,11 @@ class OneToManyAssociationsTest < CassandraObjectTestCase
                                   :last_name     => "Koziarski",
                                   :date_of_birth => Date.parse("1980/08/15")
 
-
+      assert @customer.valid?
+      assert @customer.errors.empty?
       @invoice  = mock_invoice
-
+      assert @invoice.valid?
+      assert @invoice.errors.empty?
       @customer.invoices << @invoice
     end
     
