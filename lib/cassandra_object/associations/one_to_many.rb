@@ -1,4 +1,6 @@
 module CassandraObject
+  class AssociationClearError < StandardError; end
+  
   class OneToManyAssociation
     def initialize(association_name, owner_class, options)
       @association_name  = association_name.to_s
@@ -20,6 +22,11 @@ module CassandraObject
       if has_inverse? && set_inverse
         inverse.set_inverse(record, owner)
       end
+    end
+    
+    def clear!(owner)
+      raise AssociationClearError, "Cannot clear reversed association #{@association_name}" if reversed?
+      connection.remove(column_family, owner.key.to_s, @association_name)
     end
     
     def new_key
@@ -131,6 +138,10 @@ module CassandraObject
     
     def loaded?
       defined?(@loaded) && @loaded
+    end
+    
+    def clear!
+      @association.clear!(@owner)
     end
   end
 end
