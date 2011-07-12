@@ -26,7 +26,7 @@ module CassandraObject
 
     module ClassMethods
       def attribute(name, options)
-        
+
         unless type_mapping = attribute_types[options[:type]]
           type_mapping =  { :expected_type => options[:type], 
                             :converter => options[:converter] }.with_indifferent_access

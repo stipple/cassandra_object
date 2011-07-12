@@ -2,6 +2,7 @@ require 'rubygems'
 require 'i18n'
 require 'active_support'
 require 'active_support/version'
+require 'tzinfo'
 
 module CassandraObject
   class << self
