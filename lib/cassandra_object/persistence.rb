@@ -59,6 +59,10 @@ module CassandraObject
       def remove(key)
         connection.remove(column_family, key.to_s, :consistency => write_consistency_for_thrift)
       end
+      
+      def count
+        connection.count_range(column_family)
+      end
 
       def all(keyrange = ''..'', options = {})
         keys = connection.get_range(column_family, :start => keyrange.first, :finish => keyrange.last, :count=>(options[:limit] || 100)).keys
