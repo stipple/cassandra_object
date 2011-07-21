@@ -88,3 +88,10 @@ class Appointment < CassandraObject::Base
 
   key :natural, :attributes => :title
 end
+
+class AttributesManager < CassandraObject::Base
+  attribute :str, :type => :string
+  attribute :bool, :type => :boolean
+  
+  key :uuid
+end
