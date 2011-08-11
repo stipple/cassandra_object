@@ -57,6 +57,37 @@ module Identity
         assert_equal "james-23", key.to_param
       end
     end
+    
+    context "With an attribute and a method" do
+      setup do
+        @key_factory = CassandraObject::Identity::NaturalKeyFactory.new :attributes => [:name, :age_string]
+        @james = Person.new("name" => "james", "age" => 23)
+      end
+
+      should "create a key whose string value is the two values, joined with a separator" do
+        key = @key_factory.next_key(@james)
+        expected = "#{@james.name}-#{@james.age_string}"
+        
+        assert_equal expected, key.to_s
+        assert_equal expected, key.to_param
+      end
+
+      should "parse the key" do
+        expected = "#{@james.name}-#{@james.age_string}"
+        key = @key_factory.parse(expected)
+        
+        assert_equal expected, key.to_s
+        assert_equal expected, key.to_param
+      end
+
+      should "create the key" do
+        expected = "#{@james.name}-#{@james.age_string}"
+        key = @key_factory.create(expected)
+        
+        assert_equal expected, key.to_s
+        assert_equal expected, key.to_param
+      end
+    end
 
     context "With a custom separator" do
       setup do

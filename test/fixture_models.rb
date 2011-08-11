@@ -79,6 +79,10 @@ MockRecord = Struct.new(:key)
 class Person < CassandraObject::Base
   attribute :name, :type => :string
   attribute :age,  :type => :integer
+  
+  def age_string
+    "#{age} years old"
+  end
 end
 
 class Appointment < CassandraObject::Base
