@@ -65,7 +65,7 @@ module CassandraObject
       end
 
       def all(keyrange = ''..'', options = {})
-        keys = connection.get_range(column_family, :start => keyrange.first, :finish => keyrange.last, :count=>(options[:limit] || 100)).keys
+        keys = connection.get_range(column_family, :start_key => keyrange.first, :finish_key => keyrange.last, :key_count => (options[:limit] || options[:key_count] || 100)).keys
         keys.map {|key| get(key) }
       end
 
