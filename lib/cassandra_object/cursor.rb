@@ -9,8 +9,8 @@ module CassandraObject
       @validators    = []
     end
     
-    def find(number_to_find)
-      limit       = number_to_find
+    def find(number_to_find=nil)
+      limit       = number_to_find || 100
       objects     = CassandraObject::Collection.new
       out_of_keys = false
 
@@ -20,7 +20,7 @@ module CassandraObject
         start_with = nil
       end
       
-      while objects.size < number_to_find && !out_of_keys
+      while !out_of_keys && (number_to_find.nil? || objects.size < number_to_find)
         index_results = connection.get(@column_family, @key, @super_column, :count=>limit,
                                                                             :start=>start_with,
                                                                             :reversed=>@options[:reversed])
@@ -70,7 +70,7 @@ module CassandraObject
         end
 
         start_with = objects.last_column_name = keys.last
-        limit = (number_to_find - results.size) + 1
+        limit = number_to_find.nil? ? 100 : (number_to_find - results.size) + 1
         
       end
 

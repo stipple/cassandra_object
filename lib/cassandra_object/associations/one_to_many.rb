@@ -14,7 +14,7 @@ module CassandraObject
     def find(owner, options = {})
       reversed = options.has_key?(:reversed) ? options[:reversed] : reversed?
       cursor   = CassandraObject::Cursor.new(target_class, column_family, owner.key.to_s, @association_name, :start_after => options[:start_after], :reversed => reversed)
-      cursor.find(options[:limit] || 100)
+      cursor.find(options[:limit])
     end
     
     def add(owner, record, set_inverse = true)
