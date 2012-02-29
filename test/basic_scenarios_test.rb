@@ -74,7 +74,7 @@ class BasicScenariosTest < CassandraObjectTestCase
     @invoice  = mock_invoice
 
     raw_result = Invoice.connection.get("Invoices", @invoice.key.to_s)
-    assert_equal Invoice.current_schema_version, ActiveSupport::JSON.decode(raw_result["schema_version"])
+    assert_equal Invoice.current_schema_version, raw_result["schema_version"].to_i
   end
 
   test "to_param works" do

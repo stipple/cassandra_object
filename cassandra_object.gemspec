@@ -8,10 +8,13 @@ Gem::Specification.new do |s|
   s.summary     = %q{Maps your objects into cassandra.}
   s.homepage    = %q{http://github.com/NZKoz/cassandra_object}
 
-  s.add_dependency('activesupport', '~>3.0.9')
-  s.add_dependency('activemodel',   '~>3.0.9')
+  s.add_dependency('activesupport', '~>3.1.0')
+  s.add_dependency('activemodel',   '~>3.1.0')
   s.add_dependency('tzinfo',   '~>0.3.29')
   s.add_dependency('cassandra',     '~> 0.12.0')
+  s.add_dependency('thrift_client',     '~> 0.7.1')
+  s.add_dependency('shoulda')
+  s.add_dependency('nokogiri')
 
   s.files = Dir['lib/**/*'] + Dir["vendor/**/*"]
   s.require_path = 'lib'
