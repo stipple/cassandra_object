@@ -7,3 +7,4 @@ vendor/gems/*
 vendor/cassandra-0.7/data/*
 vendor/cassandra-0.7/log/*
 .bundle
+.rvmrc
