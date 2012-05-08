@@ -3,7 +3,7 @@ module CassandraObject
     extend ActiveSupport::Concern
     
     included do
-      class_inheritable_accessor :indexes
+      class_attribute :indexes
     end
     
     class UniqueIndex

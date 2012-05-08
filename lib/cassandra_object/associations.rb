@@ -6,7 +6,7 @@ module CassandraObject
     extend ActiveSupport::Concern
     
     included do
-      class_inheritable_hash :associations
+      class_attribute :associations
     end
 
     module ClassMethods

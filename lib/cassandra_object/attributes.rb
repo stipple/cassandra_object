@@ -49,7 +49,7 @@ module CassandraObject
     end
 
     included do
-      class_inheritable_hash :model_attributes
+      class_attribute :model_attributes
       attribute_method_suffix("", "=")
       
       cattr_accessor :attribute_types

@@ -2,8 +2,8 @@ module CassandraObject
   module Migrations
     extend ActiveSupport::Concern
     included do
-      class_inheritable_array :migrations
-      class_inheritable_accessor :current_schema_version
+      class_attribute :migrations
+      class_attribute :current_schema_version
       self.current_schema_version = 0
     end
     
