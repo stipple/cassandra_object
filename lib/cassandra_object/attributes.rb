@@ -50,7 +50,7 @@ module CassandraObject
 
     included do
       class_attribute :model_attributes
-      attribute_method_suffix("", "=")
+      attribute_method_suffix("=")
       
       cattr_accessor :attribute_types
       self.attribute_types = {}.with_indifferent_access
