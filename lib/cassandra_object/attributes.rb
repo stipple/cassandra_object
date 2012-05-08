@@ -34,7 +34,7 @@ module CassandraObject
         
         new_attr = Attribute.new(name, self, type_mapping[:converter], type_mapping[:expected_type], options)
         self.model_attributes ||= {}
-        self.model_attributes.merge({name => new_attr}.with_indifferent_access)
+        self.model_attributes.merge!({name => new_attr}.with_indifferent_access)
         new_attr.define_methods!
       end
 
