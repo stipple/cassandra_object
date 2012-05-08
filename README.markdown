@@ -68,7 +68,7 @@ Here are some basic directions:
   2. Run the bundler `gem bundle`
   3. Make sure the tests pass `rake test`
 
-This gem has backwards compatibility with active support version 2.3.x,  this is to enable people to use it with rails 2.3 applications.  This backwards compatibility may not continue after the 1.0 release.
+This gem is intended for Rails 3.2.0 or later. It will not work for earlier versions, and pull requests to add compatability for earlier Rails versions will not be accepted. Please another fork of this gem should you require compatability for earlier Rails versions.
 
 ## Should I use this in production?
 
