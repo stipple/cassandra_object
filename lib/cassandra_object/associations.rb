@@ -16,9 +16,9 @@ module CassandraObject
       
       def association(association_name, options= {})
         if options[:unique]
-          write_inheritable_hash(:associations, {association_name => OneToOneAssociation.new(association_name, self, options)})
+          self.associations = {association_name => OneToOneAssociation.new(association_name, self, options)}
         else
-          write_inheritable_hash(:associations, {association_name => OneToManyAssociation.new(association_name, self, options)})
+          self.associations = {association_name => OneToManyAssociation.new(association_name, self, options)}
         end
       end
       

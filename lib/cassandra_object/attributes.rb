@@ -33,7 +33,7 @@ module CassandraObject
         end
         
         new_attr = Attribute.new(name, self, type_mapping[:converter], type_mapping[:expected_type], options)
-        write_inheritable_hash(:model_attributes, {name => new_attr}.with_indifferent_access)
+        self.model_attributes = {name => new_attr}.with_indifferent_access
         new_attr.define_methods!
       end
 

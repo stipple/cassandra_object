@@ -24,10 +24,10 @@ require 'cassandra_object/mocking'
 module CassandraObject
   class Base
     class_attribute :connection
-    class_attribute :connection_class
+    class_attribute :connection_class_attr
 
     def self.connection_class
-      read_inheritable_attribute(:connection_class) || Cassandra
+      connection_class_attr || Cassandra
     end
 
     module ConnectionManagement

@@ -31,7 +31,7 @@ module CassandraObject
     
     module ClassMethods
       def migrate(version, &blk)
-        write_inheritable_array(:migrations, [Migration.new(version, blk)])
+        self.migrations = [Migration.new(version, blk)]
         
         if version > self.current_schema_version 
           self.current_schema_version = version
