@@ -25,10 +25,8 @@ module CassandraObject
       end
     end
     
-    module InstanceMethods
-      def schema_version
-        Integer(@schema_version || self.class.current_schema_version)
-      end
+    def schema_version
+      Integer(@schema_version || self.class.current_schema_version)
     end
     
     module ClassMethods

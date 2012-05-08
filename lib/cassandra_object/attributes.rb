@@ -56,38 +56,36 @@ module CassandraObject
       self.attribute_types = {}.with_indifferent_access
     end
 
-    module InstanceMethods
-      def write_attribute(name, value)
-        if ma = self.class.model_attributes[name]
-          @attributes[name.to_s] = ma.check_value!(value)
-        else
-          raise NoMethodError, "Unknown attribute #{name.inspect}"
-        end
+    def write_attribute(name, value)
+      if ma = self.class.model_attributes[name]
+        @attributes[name.to_s] = ma.check_value!(value)
+      else
+        raise NoMethodError, "Unknown attribute #{name.inspect}"
       end
-
-      def read_attribute(name)
-        @attributes[name.to_s]
-      end
-
-      def attributes=(attributes)
-        attributes.each do |(name, value)|
-          send("#{name}=", value)
-        end
-      end
-
-      protected
-        def attribute_method?(name)
-          !!model_attributes[name.to_sym]
-        end
-
-      private
-        def attribute(name)
-          read_attribute(name.to_sym)
-        end
-
-        def attribute=(name, value)
-          write_attribute(name.to_sym, value)
-        end
     end
+
+    def read_attribute(name)
+      @attributes[name.to_s]
+    end
+
+    def attributes=(attributes)
+      attributes.each do |(name, value)|
+        send("#{name}=", value)
+      end
+    end
+
+    protected
+      def attribute_method?(name)
+        !!model_attributes[name.to_sym]
+      end
+
+    private
+      def attribute(name)
+        read_attribute(name.to_sym)
+      end
+
+      def attribute=(name, value)
+        write_attribute(name.to_sym, value)
+      end
   end
 end

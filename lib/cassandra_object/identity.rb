@@ -36,26 +36,23 @@ module CassandraObject
       end
     end
     
-    module InstanceMethods
+    def ==(comparison_object)
+      comparison_object.equal?(self) ||
+        (comparison_object.instance_of?(self.class) &&
+          comparison_object.key == key &&
+          !comparison_object.new_record?)
+    end
 
-      def ==(comparison_object)
-        comparison_object.equal?(self) ||
-          (comparison_object.instance_of?(self.class) &&
-            comparison_object.key == key &&
-            !comparison_object.new_record?)
-      end
+    def eql?(comparison_object)
+      self == (comparison_object)
+    end
 
-      def eql?(comparison_object)
-        self == (comparison_object)
-      end
-
-      def hash
-        key.to_s.hash
-      end
-      
-      def to_param
-        key.to_param
-      end
+    def hash
+      key.to_s.hash
+    end
+    
+    def to_param
+      key.to_param
     end
   end
 end

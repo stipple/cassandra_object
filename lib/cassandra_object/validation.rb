@@ -29,29 +29,27 @@ module CassandraObject
       end
     end
     
-    module InstanceMethods
-      def valid?
-        run_callbacks :validation do
-          super
-        end
+    def valid?
+      run_callbacks :validation do
+        super
       end
+    end
 
-      def save
-        if valid?
-          super
-        else
-          false
-        end
+    def save
+      if valid?
+        super
+      else
+        false
       end
-      
-      def save!
-        save || RecordInvalidError.raise_error(self)
-      end
-      
-      if CassandraObject.old_active_support
-        def _run_validate_callbacks
-          run_callbacks :validate
-        end
+    end
+    
+    def save!
+      save || RecordInvalidError.raise_error(self)
+    end
+    
+    if CassandraObject.old_active_support
+      def _run_validate_callbacks
+        run_callbacks :validate
       end
     end
   end
