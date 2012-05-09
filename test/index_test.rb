@@ -3,7 +3,7 @@ require 'test_helper'
 class IndexTest < CassandraObjectTestCase
   context "A non-unique index" do
     setup do
-      @last_name = ActiveSupport::SecureRandom.hex(5)
+      @last_name = SecureRandom.hex(5)
       @koz = Customer.create :first_name=>"Michael", :last_name=>@last_name, :date_of_birth=>28.years.ago.to_date
       @wife = Customer.create :first_name=>"Anika", :last_name=>@last_name, :date_of_birth=>30.years.ago.to_date
     end
@@ -26,7 +26,7 @@ class IndexTest < CassandraObjectTestCase
 
   context "A corrupt non-unique index" do
     setup do
-      @last_name = ActiveSupport::SecureRandom.hex(5)
+      @last_name = SecureRandom.hex(5)
       @koz = Customer.create :first_name=>"Michael", :last_name=>@last_name, :date_of_birth=>28.years.ago.to_date
       connection.insert("CustomersByLastName", @last_name, {"last_name"=>{SimpleUUID::UUID.new=>"ROFLSKATES"}})
       @wife = Customer.create :first_name=>"Anika", :last_name=>@last_name, :date_of_birth=>30.years.ago.to_date

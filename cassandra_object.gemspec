@@ -14,8 +14,10 @@ Gem::Specification.new do |s|
   s.add_dependency('cassandra',     '~> 0.12')
   s.add_dependency('thrift_client',     '~> 0.8')
   s.add_development_dependency('shoulda')
+  s.add_development_dependency('test-unit')
   s.add_dependency('nokogiri')
 
   s.files = Dir['lib/**/*'] + Dir["vendor/**/*"]
+  s.test_files = Dir['test/**/*']
   s.require_path = 'lib'
 end

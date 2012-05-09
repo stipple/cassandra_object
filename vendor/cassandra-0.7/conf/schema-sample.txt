@@ -8,9 +8,9 @@ accessed the help without connecting to a running cassandra instance by starting
 client and typing "help;"
 */
 
-  create keyspace CassandraObject
-    with replication_factor = 1
-    and placement_strategy = 'org.apache.cassandra.locator.SimpleStrategy';
+  create keyspace CassandraObject;
+/*    with replication_factor = 1 */
+    and placement_strategy = 'org.apache.cassandra.locator.SimpleStrategy'; */
 
 use CassandraObject;
 create column family Customers

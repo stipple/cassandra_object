@@ -7,6 +7,7 @@ module CassandraObject
     
     included do
       class_attribute :associations
+      self.associations = {}
     end
 
     module ClassMethods
@@ -15,11 +16,8 @@ module CassandraObject
       end
       
       def association(association_name, options= {})
-        if options[:unique]
-          self.associations = {association_name => OneToOneAssociation.new(association_name, self, options)}
-        else
-          self.associations = {association_name => OneToManyAssociation.new(association_name, self, options)}
-        end
+        klass = options[:unique] ? OneToOneAssociation : OneToManyAssociation
+        self.associations.merge!({association_name => klass.new(association_name, self, options)})
       end
       
       def remove(key)

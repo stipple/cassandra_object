@@ -24,11 +24,9 @@ require 'cassandra_object/mocking'
 module CassandraObject
   class Base
     class_attribute :connection
-    class_attribute :connection_class_attr
+    class_attribute :connection_class
 
-    def self.connection_class
-      connection_class_attr || Cassandra
-    end
+    self.connection_class = Cassandra
 
     module ConnectionManagement
       def establish_connection(*args)

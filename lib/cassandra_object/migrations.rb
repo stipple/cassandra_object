@@ -3,6 +3,7 @@ module CassandraObject
     extend ActiveSupport::Concern
     included do
       class_attribute :migrations
+      self.migrations = []
       class_attribute :current_schema_version
       self.current_schema_version = 0
     end
@@ -31,7 +32,7 @@ module CassandraObject
     
     module ClassMethods
       def migrate(version, &blk)
-        self.migrations = [Migration.new(version, blk)]
+        self.migrations << Migration.new(version, blk)
         
         if version > self.current_schema_version 
           self.current_schema_version = version

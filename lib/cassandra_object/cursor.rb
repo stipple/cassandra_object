@@ -26,7 +26,6 @@ module CassandraObject
                                                                             :reversed=>@options[:reversed])
                                                                             
                                     
-                                                                                                                      
         out_of_keys  = index_results.size < limit
 
         if !start_with.blank?

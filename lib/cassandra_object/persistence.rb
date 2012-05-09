@@ -2,8 +2,11 @@ module CassandraObject
   module Persistence
     extend ActiveSupport::Concern
     included do
-      class_attribute :write_consistency_attr
-      class_attribute :read_consistency_attr
+      class_attribute :write_consistency
+      class_attribute :read_consistency
+
+      self.write_consistency = :quorum
+      self.read_consistency = :quorum
     end
 
     VALID_READ_CONSISTENCY_LEVELS = [:one, :quorum, :all]
@@ -24,14 +27,6 @@ module CassandraObject
           end
           self.read_consistency = levels[:read]
         end
-      end
-
-      def write_consistency
-        write_consistency_attr || :quorum
-      end
-
-      def read_consistency
-        read_consistency_attr || :quorum
       end
 
       def get(key, options = {})
