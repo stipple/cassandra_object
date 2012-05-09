@@ -64,6 +64,17 @@ module CassandraObject
         keys.map {|key| get(key) }
       end
 
+      def page(start_key, options = {})
+        if options[:limit]
+          options[:limit] += 1
+        elsif options[:key_count]
+          options[:key_count] += 1
+        end
+        
+        result = all(start_key..'', options)
+        result[1..-1] || []
+      end
+      
       def first(keyrange = ''..'', options = {})
         all(keyrange, options.merge(:limit=>1)).first
       end
