@@ -56,7 +56,7 @@ module CassandraObject
       end
       
       def count
-        connection.count_range(column_family)
+        connection.count_range(column_family, :batch_size => 500)
       end
 
       def all(keyrange = ''..'', options = {})
