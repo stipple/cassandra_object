@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.add_dependency('activesupport', '~> 3.2')
   s.add_dependency('activemodel',   '~> 3.2')
   s.add_dependency('tzinfo')
-  s.add_dependency('cassandra',     '~> 0.12')
+  s.add_dependency('mcmire-cassandra',     '~> 0.12')
   s.add_dependency('thrift_client',     '~> 0.8')
   s.add_development_dependency('shoulda')
   s.add_development_dependency('test-unit')
