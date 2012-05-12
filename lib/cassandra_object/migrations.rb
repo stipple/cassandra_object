@@ -5,7 +5,7 @@ module CassandraObject
       class_attribute :migrations
       self.migrations = []
       class_attribute :current_schema_version
-      self.current_schema_version = 0
+      self.current_schema_version = self.use_migrations ? 0 : nil
     end
     
     class Migration
@@ -27,6 +27,7 @@ module CassandraObject
     end
     
     def schema_version
+      return nil unless self.class.use_migrations
       Integer(@schema_version || self.class.current_schema_version)
     end
     

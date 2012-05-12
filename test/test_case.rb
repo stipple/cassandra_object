@@ -1,5 +1,10 @@
 
 class CassandraObjectTestCase < ActiveSupport::TestCase
+  def setup
+    Customer.use_migrations = true
+    Invoice.use_migrations = true
+  end
+  
   def teardown
     CassandraObject::Base.connection.clear_keyspace!
   end

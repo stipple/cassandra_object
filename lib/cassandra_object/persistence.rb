@@ -96,17 +96,21 @@ module CassandraObject
         #  attributes available to migrations
         attributes.delete_if{|k,_| !model_attributes.keys.include?(k)}
         allocate.tap do |object|
-          object.instance_variable_set("@schema_version", attributes.delete('schema_version'))
+          object.instance_variable_set("@schema_version", attributes.delete('schema_version')) if object.class.use_migrations
           object.instance_variable_set("@key", parse_key(key))
           object.instance_variable_set("@attributes", decode_columns_hash(attributes).with_indifferent_access)
         end
       end
 
       def encode_columns_hash(attributes, schema_version)
-        attributes.inject(Hash.new) do |memo, (column_name, value)|
+        hash = attributes.inject(Hash.new) do |memo, (column_name, value)|
           memo[column_name.to_s] = model_attributes[column_name].converter.encode(value)
           memo
-        end.merge({"schema_version" => schema_version.to_s})
+        end
+        
+        hash.merge!({"schema_version" => schema_version.to_s}) if schema_version
+        
+        hash
       end
 
       def decode_columns_hash(attributes)

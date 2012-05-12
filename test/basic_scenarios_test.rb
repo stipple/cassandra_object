@@ -58,8 +58,19 @@ class BasicScenariosTest < CassandraObjectTestCase
     }
   end
 
-  test "should have a schema version of 0" do
-    assert_equal 0, @customer.schema_version
+  context "schemas" do
+    should "have a schema version of 0" do
+      assert_equal 0, @customer.schema_version
+    end
+    
+    should "have a schema version of nil if class does not use migrations" do
+      Customer.use_migrations = false
+      @customer = Customer.create :first_name    => "Michael",
+                                  :last_name     => "Koziarski",
+                                  :date_of_birth => Date.parse("1980/08/15")
+      
+      assert_nil @customer.schema_version
+    end
   end
 
   test "multiget" do
@@ -70,13 +81,23 @@ class BasicScenariosTest < CassandraObjectTestCase
     assert_nil nothing
   end
 
-  test "creating a new record starts with the right version" do
-    @invoice  = mock_invoice
-
-    raw_result = Invoice.connection.get("Invoices", @invoice.key.to_s)
-    assert_equal Invoice.current_schema_version, raw_result["schema_version"].to_i
+  context "schemaless or not" do
+    should "create a new record with the right version" do
+      @invoice  = mock_invoice
+  
+      raw_result = Invoice.connection.get("Invoices", @invoice.key.to_s)
+      assert_equal Invoice.current_schema_version, raw_result["schema_version"].to_i
+    end
+  
+    should "create a new record without a version for schemaless classes" do
+      Invoice.use_migrations = false
+      @invoice  = mock_invoice
+  
+      raw_result = Invoice.connection.get("Invoices", @invoice.key.to_s)
+      assert_nil raw_result["schema_version"]
+    end
   end
-
+  
   test "to_param works" do
     invoice = mock_invoice
     param = invoice.to_param

@@ -25,9 +25,12 @@ module CassandraObject
   class Base
     class_attribute :connection
     class_attribute :connection_class
+    class_attribute :use_migrations
 
     self.connection_class = Cassandra
 
+    self.use_migrations = true
+    
     module ConnectionManagement
       def establish_connection(*args)
         self.connection = connection_class.new(*args)
@@ -77,7 +80,7 @@ module CassandraObject
       @new_record = true
       @attributes = {}.with_indifferent_access
       self.attributes = attributes
-      @schema_version = self.class.current_schema_version
+      @schema_version = self.class.use_migrations ? self.class.current_schema_version : nil
     end
   end
 end
