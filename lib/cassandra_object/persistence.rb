@@ -196,7 +196,9 @@ module CassandraObject
     end
     
     def reload
-      self.class.get(self.key)
+      fresh_object = self.class.get(self.key)
+      self.attributes.update fresh_object.attributes
+      self
     end
     
   end
