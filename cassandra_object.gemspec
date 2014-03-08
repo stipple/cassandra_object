@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.summary     = %q{Maps your objects into cassandra.}
   s.homepage    = %q{http://github.com/stipple/cassandra_object}
 
-  s.add_dependency('activesupport', '~> 3.2')
-  s.add_dependency('activemodel',   '~> 3.2')
+  s.add_dependency('activesupport', '>= 3.2')
+  s.add_dependency('activemodel',   '>= 3.2')
   s.add_dependency('tzinfo')
   s.add_dependency('cassandra',     '~> 0')
   s.add_dependency('thrift_client',     '~> 0.8')
